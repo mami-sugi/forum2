@@ -16,22 +16,24 @@
     <input type="submit" value="送信">
 </form>
 <hr>
-if($temp['id'] == $_SESSION['user_id']){//
+{foreach $items as $itemdata}
+{if $itemdata.user_id eq $smarty.session.user_id}
             <div style="margin-left: 30px;margin-bottom: 10px;padding: 5px;" >
-            投稿者名:<b><?php print $temp['name']; ?></b><br><!--名前を表示-->
+            投稿者名:<b>{$itemdata.name}</b><br><!--名前を表示-->
             <form action="" method="post">
-            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-		    <textarea cols="50" rows="4" name="new_contents" style="margin-top: 5px"><?php print $row['contents']; ?></textarea><br><!--投稿内容を表示-->
+            <input type="hidden" name="id" value={$itemdata.id}>
+		    <textarea cols="50" rows="4" name="new_contents" style="margin-top: 5px">{$itemdata.contents}</textarea><br><!--投稿内容を表示-->
 			<button type="submit" name="action" value="update">変更</button>
 			<button type="submit" name="action" value="delete">削除</button>
 			</form>
-}else{//if none editor
+			</div>
+{else}{* if none editor *}
             <div style="margin-left: 30px;margin-bottom: 10px;padding: 5px;" >
-            投稿者名:<b><?php print $temp['name']; ?></b><br><!--名前を表示-->
-            <?php print $row['contents']; ?><br><!--投稿内容を表示-->
+            投稿者名:<b>{$itemdata.name}</b><br><!--名前を表示-->
+            {$itemdata.contents}<br><!--投稿内容を表示-->
             <br>
             </div>
-} 
-
+{/if}
+{/foreach}
 </body>
 </html>
