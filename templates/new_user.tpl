@@ -7,7 +7,6 @@
 <h1 align="center">新規ユーザー登録</h1>
 <div align="center">
 <a href="index.php">トップページへ</a>
-<a href="login.php">ログイン</a>
 <div>
 {* 入力フォーム *}
 <form action="" method="post" style="margin: 10px;">
