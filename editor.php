@@ -112,7 +112,7 @@ if(!isset($_POST['new_contents'])) {//フォームに何もないとき
         $member = $db -> prepare("SELECT * FROM member WHERE id = $temp_id");//SELECT命令の準備
 		$member->execute();//SELECT命令の実行
 		$temp = $member->fetch(PDO::FETCH_ASSOC);
-		$item[$i]['name'] = $user['name'];
+		$item[$i]['name'] = $temp['name'];
 		$smarty->assign('items',$item);
 		$i++;//item配列の添え字インクリメント
         
