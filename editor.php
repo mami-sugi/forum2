@@ -4,9 +4,17 @@
  */
 mb_language('ja');
 mb_internal_encoding('UTF-8');
+
+require(dirname(__FILE__).'/libs/Smarty.class.php');
+$smarty = new Smarty();
+
+$smarty->template_dir = dirname(__FILE__).'/templates';
+$smarty->compile_dir = dirname(__FILE__).'/templates_c';
+
 session_start();
 if(isset($_POST['logout'])){//ログアウト
 	session_destroy();
+	header('Location:index.php');
 }
 /*エスケープ処理　クロスサイトスクリプティング用　for XSS*/
 function escape($str){
@@ -27,10 +35,10 @@ require_once 'db.php';
 		$c_id->execute();
 		$user = $c_id->fetch(PDO::FETCH_ASSOC);
 		if($user['password'] != $password){
-			header('Location:login.php');	
+			header('Location:index.php');	
         }else{
-			$_SESSION['user_id'] = $_POST['user_id'];
-			$_SESSION['password'] = $_POST['password'];
+			$_SESSION['user_id'] = $user_id;
+			$_SESSION['password'] = $password;
 			$_SESSION['name'] = $user['name'];
         	$_SESSION['login'] = 'login';
         }
@@ -39,25 +47,6 @@ require_once 'db.php';
         die('エラーメッセージ' . $error->getMessage());//接続失敗時の出力文
     }
 }
-?>
-<!DOCTYPE html>
-<html>
-<head>
-<title>簡易掲示板</title>
-</head>
-<body>
-<h1><?php print $_SESSION['name']; ?>さんの編集ページ</h1>
-<div style="margin: 5px;">
-<form action="" method="post">
-<button type="submit" name="logout">ログアウト</button>
-</form>
-<div>
-<form action="" method="post" style="margin: 15px" width="500px">
-    投稿内容:<br>
-    <textarea cols="50" rows="4" name="contents"　style="margin-top: 5px">255字以内</textarea><!--300--><br>
-    <input type="submit" value="送信">
-</form>
-<?php 
 /*データベース接続*/
 require_once 'db.php';
 
@@ -79,9 +68,6 @@ if(!isset($_POST['contents'])) {//フォームに何もないとき
         die('エラーメッセージ' . $error->getMessage());//接続失敗時の出力文
     }
 }
-?>
-<hr>
-<?php
 	/* 編集者のUPDATE・DELETE実行 */
 if(isset($_POST['id'])){//変更・削除が送られてきたとき
 	$id = $_POST['id'];
@@ -112,44 +98,29 @@ if(!isset($_POST['new_contents'])) {//フォームに何もないとき
 		}	
 	}
 }
+        
     /*「ユーザー名」「本文」データ表示(投稿内容表示)*/
     try{
         $db = getDb();//データベースへの接続を確立
         $post = $db -> prepare('SELECT * FROM post ORDER BY id DESC');//SELECT命令の準備
-        $post->execute();//SELECT命令の実行
+        $post->execute();//SELECT命令の実行$items = array();//表示コンテンツを格納する配列
+        $i=0;//item配列の添え字初期化
         while($row = $post->fetch(PDO::FETCH_ASSOC)){//現在格納されているものすべてを
+        $item[$i] = $row;//postテーブル内容格納
         //ユーザーIDからユーザー名をとる
         $temp_id = $row['user_id'];
         $member = $db -> prepare("SELECT * FROM member WHERE id = $temp_id");//SELECT命令の準備
 		$member->execute();//SELECT命令の実行
 		$temp = $member->fetch(PDO::FETCH_ASSOC);
-if($temp['id'] == $_SESSION['user_id']){//
-?>
-            <div style="margin-left: 30px;margin-bottom: 10px;padding: 5px;" >
-            投稿者名:<b><?php print $temp['name']; ?></b><br><!--名前を表示-->
-            <form action="" method="post">
-            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-		    <textarea cols="50" rows="4" name="new_contents" style="margin-top: 5px"><?php print $row['contents']; ?></textarea><br><!--投稿内容を表示-->
-			<button type="submit" name="action" value="update">変更</button>
-			<button type="submit" name="action" value="delete">削除</button>
-			</form>
-<?php
-}else{//if none editor
-?>
-            <div style="margin-left: 30px;margin-bottom: 10px;padding: 5px;" >
-            投稿者名:<b><?php print $temp['name']; ?></b><br><!--名前を表示-->
-            <?php print $row['contents']; ?><br><!--投稿内容を表示-->
-<?php	
-} 
-?>
-            <br>
-            </div>
-<?php
+		$item[$i]['name'] = $user['name'];
+		$smarty->assign('items',$item);
+		$i++;//item配列の添え字インクリメント
+        
         }
         $db = NULL;
     } catch (PDOException $error) {
         die('エラーメッセージ' . $error->getMessage());//接続失敗時の出力文
     }
+
+$smarty->display('editor.tpl');
 ?>
-</body>
-</html>
