@@ -12,7 +12,7 @@ $smarty->template_dir = dirname(__FILE__).'/templates';
 $smarty->compile_dir = dirname(__FILE__).'/templates_c';
 
 session_start();
-if(isset($_SESSION['user_id']) && isset($_SESSION['password'])){//ログアウト
+if(isset($_SESSION['user_id']) && isset($_SESSION['password'])){//indexに来たら自動ログアウト
 	session_destroy();
 }
 /*エスケープ処理　クロスサイトスクリプティング用　for XSS*/
