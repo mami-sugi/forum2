@@ -12,15 +12,15 @@ $smarty->template_dir = dirname(__FILE__).'/templates';
 $smarty->compile_dir = dirname(__FILE__).'/templates_c';
 
 session_start();
-if(isset($_POST['logout'])){//ログアウト
-	session_destroy();
-	header('Location:index.php');
-}
 /*エスケープ処理　クロスサイトスクリプティング用　for XSS*/
 function escape($str){
     return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
 }
-if(!empty($_POST['user_id']) && !empty($_POST['password'])){
+if(isset($_POST['logout'])){//ログアウト
+	session_destroy();
+	header('Location:index.php');
+}
+if(!empty($_POST['user_id']) && !empty($_POST['password'])){//indexから来た
 /*データベース接続*/
 require_once 'db.php';
     //XSS　エスケープ処理
@@ -46,12 +46,14 @@ require_once 'db.php';
     } catch (PDOException $error) {
         die('エラーメッセージ' . $error->getMessage());//接続失敗時の出力文
     }
+}elseif($_SESSION['login'] != 'login'){//loginがなかった時(url入力で無理やり来た)　強制送還
+		header('Location:index.php');	
 }
 /*データベース接続*/
 require_once 'db.php';
 
 if(!isset($_POST['contents'])) {//フォームに何もないとき
-    print "Please input your name or contents";
+    print "Please input contents";
 }else{
     //XSS　エスケープ処理
     $contents = escape($_POST['contents']);
