@@ -17,6 +17,7 @@ function escape($str){
     return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
 }
 if(isset($_POST['logout'])){//ログアウト
+	$_SESSION = array();// セッション変数を全て解除する
 	session_destroy();
 	header('Location:index.php');
 }
@@ -49,6 +50,7 @@ require_once 'db.php';
 }elseif($_SESSION['login'] != 'login'){//loginがなかった時(url入力で無理やり来た)　強制送還
 		header('Location:index.php');	
 }
+
 /*データベース接続*/
 require_once 'db.php';
 
