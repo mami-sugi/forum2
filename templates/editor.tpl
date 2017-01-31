@@ -4,7 +4,7 @@
 <title>簡易掲示板</title>
 </head>
 <body>
-<h1><?php print $_SESSION['name']; ?>さんの編集ページ</h1>
+<h1>{$smarty.session.name}さんの編集ページ</h1>
 <div style="margin: 5px;">
 <form action="" method="post">
 <button type="submit" name="logout" value="logout">ログアウト</button>
