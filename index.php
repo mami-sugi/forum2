@@ -1,6 +1,6 @@
 <?php
 /** 
- * 掲示板　ログインへ・新規ユーザー登録へ・ログ表示
+ * 掲示板 ログイン・ログ表示
  */
 mb_language('ja');
 mb_internal_encoding('UTF-8');
