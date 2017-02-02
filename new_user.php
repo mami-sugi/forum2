@@ -34,7 +34,8 @@ if(empty($_POST['name']) || empty($_POST['user_id']) || empty($_POST['password']
         $c_id = $db -> prepare("SELECT * FROM member WHERE id LIKE :user_id");
         $c_id->bindValue(':user_id', $user_id);//ユーザーID set
 		$c_id->execute();
-        $c_pass = $db -> prepare("SELECT * FROM member WHERE password LIKE '$password'");
+        $c_pass = $db -> prepare("SELECT * FROM member WHERE password LIKE :password");
+        $c_pass->bindValue(':password', $password);//パスワード set
 		$c_pass->execute();
 		if($c_id->fetch() != NULL){
 			print "Please set another id";	
