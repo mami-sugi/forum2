@@ -31,7 +31,8 @@ if(empty($_POST['name']) || empty($_POST['user_id']) || empty($_POST['password']
     try {
         $db = getDb();//データベースへの接続を確立
         //同じユーザーID&パスワードが無いと確認
-        $c_id = $db -> prepare("SELECT * FROM member WHERE id LIKE $user_id");
+        $c_id = $db -> prepare("SELECT * FROM member WHERE id LIKE :user_id");
+        $c_id->bindValue(':user_id', $user_id);//ユーザーID set
 		$c_id->execute();
         $c_pass = $db -> prepare("SELECT * FROM member WHERE password LIKE '$password'");
 		$c_pass->execute();

@@ -35,7 +35,8 @@ require_once 'db.php';
         $item[$i] = $row;//postテーブル内容格納
         //ユーザーIDからユーザー名をとってくる
         $user_id = $row['user_id'];
-        $member = $db -> prepare("SELECT * FROM member WHERE id = $user_id");//SELECT命令の準備
+        $member = $db -> prepare("SELECT * FROM member WHERE id = :user_id");//SELECT命令の準備
+        $member->bindValue(':user_id', $user_id);//ユーザーID set
 		$member->execute();//SELECT命令の実行
 		$user = $member->fetch(PDO::FETCH_ASSOC);
 		$item[$i]['name'] = $user['name'];

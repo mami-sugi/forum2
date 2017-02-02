@@ -32,7 +32,8 @@ require_once 'db.php';
         $db = getDb();//データベースへの接続を確立
         
         //同じユーザーID&パスワードを確認
-        $c_id = $db -> prepare("SELECT * FROM member WHERE id LIKE $user_id");
+        $c_id = $db -> prepare("SELECT * FROM member WHERE id LIKE :user_id");
+        $c_id->bindValue(':user_id', $user_id);//ユーザーID set
 		$c_id->execute();
 		$user = $c_id->fetch(PDO::FETCH_ASSOC);
 		if($user['password'] != $password){
@@ -50,9 +51,6 @@ require_once 'db.php';
 }elseif($_SESSION['login'] != 'login'){//loginがなかった時(url入力で無理やり来た)　強制送還
 		header('Location:index.php');	
 }
-
-/*データベース接続*/
-require_once 'db.php';
 
 if(!isset($_POST['contents'])) {//フォームに何もないとき
     print "Please input contents";
@@ -84,7 +82,9 @@ if(!isset($_POST['new_contents'])) {//フォームに何もないとき
     try{
         $db = getDb();//データベースへの接続を確立
         $new_contents = $_POST['new_contents'];
-        $update = $db -> prepare("UPDATE post SET contents = '$new_contents' WHERE id = $id");//UPDATE命令の準備
+        $update = $db -> prepare("UPDATE post SET :contents WHERE id = :id");//UPDATE命令の準備
+        $update->bindValue(':contents',$contents);//投稿内容 set
+        $update->bindValue(':id', $id);//ユーザーID set
         $update->execute();//SELECT命令の実行
         $db = NULL;
 		} catch (PDOException $error) {
@@ -94,7 +94,8 @@ if(!isset($_POST['new_contents'])) {//フォームに何もないとき
     }else if($_POST['action'] == "delete"){
 	    try{
 	        $db = getDb();//データベースへの接続を確立
-    	    $delete = $db -> prepare("DELETE FROM post WHERE id = $id");//DELETE命令の準備
+    	    $delete = $db -> prepare("DELETE FROM post WHERE id = :id");//DELETE命令の準備
+        	$delete->bindValue(':id', $id);//ID set
         	$delete->execute();//DELETE命令の実行
         	$db = NULL;
 		} catch (PDOException $error) {
@@ -113,7 +114,8 @@ if(!isset($_POST['new_contents'])) {//フォームに何もないとき
         $item[$i] = $row;//postテーブル内容格納
         //ユーザーIDからユーザー名をとる
         $temp_id = $row['user_id'];
-        $member = $db -> prepare("SELECT * FROM member WHERE id = $temp_id");//SELECT命令の準備
+        $member = $db -> prepare("SELECT * FROM member WHERE id = :temp_id");//SELECT命令の準備
+        $member->bindValue(':temp_id', $temp_id);//ユーザーID set
 		$member->execute();//SELECT命令の実行
 		$temp = $member->fetch(PDO::FETCH_ASSOC);
 		$item[$i]['name'] = $temp['name'];
