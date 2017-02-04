@@ -19,18 +19,18 @@
 {foreach $items as $itemdata}
 {if $itemdata.user_id eq $smarty.session.user_id}
             <div style="margin-left: 30px;margin-bottom: 10px;padding: 5px;" >
-            投稿者名:<b>{$itemdata.name}</b><br><!--名前を表示-->
+            投稿者名:<b>{$itemdata.name|escape:'htmlall'}</b><br><!--名前を表示-->
             <form action="" method="post">
             <input type="hidden" name="id" value={$itemdata.id}>
-		    <textarea cols="50" rows="4" name="new_contents" style="margin-top: 5px">{$itemdata.contents}</textarea><br><!--投稿内容を表示-->
+		    <textarea cols="50" rows="4" name="new_contents" style="margin-top: 5px">{$itemdata.contents|escape:'htmlall'}</textarea><br><!--投稿内容を表示-->
 			<button type="submit" name="action" value="update">変更</button>
 			<button type="submit" name="action" value="delete">削除</button>
 			</form>
 			</div>
 {else}{* if none editor *}
             <div style="margin-left: 30px;margin-bottom: 10px;padding: 5px;" >
-            投稿者名:<b>{$itemdata.name}</b><br><!--名前を表示-->
-            {$itemdata.contents}<br><!--投稿内容を表示-->
+            投稿者名:<b>{$itemdata.name|escape:'htmlall'}</b><br><!--名前を表示-->
+            {$itemdata.contents|escape:'htmlall'}<br><!--投稿内容を表示-->
             <br>
             </div>
 {/if}

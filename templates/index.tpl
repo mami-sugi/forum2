@@ -19,8 +19,8 @@
 <hr>
 {foreach $items as $itemdata}
             <div style="margin-left: 30px;margin-bottom: 10px;padding: 5px;" >
-            投稿者名:<b>{$itemdata.name}</b><br><!--名前を表示-->
-            {$itemdata.contents}<br><!--投稿内容を表示-->
+            投稿者名:<b>{$itemdata.name|escape:'htmlall'}</b><br><!--名前を表示-->
+            {$itemdata.contents|escape:'htmlall'}<br><!--投稿内容を表示-->
             <br>
             </div>     
 {/foreach}
