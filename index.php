@@ -2,16 +2,8 @@
 /** 
  * 掲示板　ログイン・ログ表示
  */
-mb_language('ja');
-mb_internal_encoding('UTF-8');
+require_once 'h_pro.php';
 
-require(dirname(__FILE__).'/libs/Smarty.class.php');
-$smarty = new Smarty();
-
-$smarty->template_dir = dirname(__FILE__).'/templates';
-$smarty->compile_dir = dirname(__FILE__).'/templates_c';
-
-session_start();
 if(isset($_SESSION['user_id']) && isset($_SESSION['password'])){//indexに来たら自動ログアウト
 	$_SESSION = array();// セッション変数を全て解除する
 	session_destroy();
