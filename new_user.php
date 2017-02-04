@@ -3,6 +3,7 @@
  * 新規ユーザー登録
  */
 require_once 'h_pro.php';
+session_start();
 
 /*データベース接続*/
 require_once 'db.php';

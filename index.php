@@ -3,6 +3,7 @@
  * 掲示板　ログイン・ログ表示
  */
 require_once 'h_pro.php';
+session_start();
 
 if(isset($_SESSION['user_id']) && isset($_SESSION['password'])){//indexに来たら自動ログアウト
 	$_SESSION = array();// セッション変数を全て解除する

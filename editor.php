@@ -3,11 +3,8 @@
  * ログイン後　編集ページ
  */
 require_once 'h_pro.php';
+session_start();
 
-/*エスケープ処理　クロスサイトスクリプティング用　for XSS*/
-function escape($str){
-    return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
-}
 if(isset($_POST['logout'])){//ログアウト
 	$_SESSION = array();// セッション変数を全て解除する
 	session_destroy();
