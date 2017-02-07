@@ -2,7 +2,7 @@
 /**
  * ログイン後　編集ページ
  */
-require_once 'h_pro.php';
+require_once 'mb_and_for-smarty.php';
 session_start();
 
 if(isset($_POST['logout'])){//ログアウト
@@ -30,7 +30,6 @@ if(!empty($_POST['user_id']) && !empty($_POST['password'])){//indexから来た
 			header('Location:index.php');	
         }else{
 			$_SESSION['user_id'] = $user_id;
-			$_SESSION['password'] = $password;
 			$_SESSION['name'] = $user['name'];
         	$_SESSION['login'] = 'login';
         }

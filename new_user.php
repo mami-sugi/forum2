@@ -2,7 +2,7 @@
 /**
  * 新規ユーザー登録
  */
-require_once 'h_pro.php';
+require_once 'mb_and_for-smarty.php';
 session_start();
 
 /*データベース接続*/
