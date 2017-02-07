@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2017-01-26 10:57:57
+/* Smarty version 3.1.30, created on 2017-02-04 08:11:37
   from "C:\xampp2\htdocs\techaca\forum2\templates\index.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5889c8252c7f89_40333014',
+  'unifunc' => 'content_58957ea9c7ca58_22531864',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ce3f8e232260ad9a20ae2494a68fadb747958b95' => 
     array (
       0 => 'C:\\xampp2\\htdocs\\techaca\\forum2\\templates\\index.tpl',
-      1 => 1485423599,
+      1 => 1486192293,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5889c8252c7f89_40333014 (Smarty_Internal_Template $_smarty_tpl) {
+function content_58957ea9c7ca58_22531864 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html>
@@ -47,9 +47,9 @@ if ($_from !== null) {
 foreach ($_from as $_smarty_tpl->tpl_vars['itemdata']->value) {
 ?>
             <div style="margin-left: 30px;margin-bottom: 10px;padding: 5px;" >
-            投稿者名:<b><?php echo $_smarty_tpl->tpl_vars['itemdata']->value['name'];?>
+            投稿者名:<b><?php echo mb_convert_encoding(htmlspecialchars($_smarty_tpl->tpl_vars['itemdata']->value['name'], ENT_QUOTES, 'UTF-8', true), "HTML-ENTITIES", 'UTF-8');?>
 </b><br><!--名前を表示-->
-            <?php echo $_smarty_tpl->tpl_vars['itemdata']->value['contents'];?>
+            <?php echo mb_convert_encoding(htmlspecialchars($_smarty_tpl->tpl_vars['itemdata']->value['contents'], ENT_QUOTES, 'UTF-8', true), "HTML-ENTITIES", 'UTF-8');?>
 <br><!--投稿内容を表示-->
             <br>
             </div>     

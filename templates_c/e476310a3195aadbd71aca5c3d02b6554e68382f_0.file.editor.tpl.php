@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2017-01-31 09:22:49
+/* Smarty version 3.1.30, created on 2017-01-31 09:39:15
   from "C:\xampp2\htdocs\techaca\forum2\templates\editor.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_589049594f2427_66527247',
+  'unifunc' => 'content_58904d3360b3f2_21090011',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e476310a3195aadbd71aca5c3d02b6554e68382f' => 
     array (
       0 => 'C:\\xampp2\\htdocs\\techaca\\forum2\\templates\\editor.tpl',
-      1 => 1485850966,
+      1 => 1485851951,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_589049594f2427_66527247 (Smarty_Internal_Template $_smarty_tpl) {
+function content_58904d3360b3f2_21090011 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,7 +28,8 @@ function content_589049594f2427_66527247 (Smarty_Internal_Template $_smarty_tpl)
 <title>簡易掲示板</title>
 </head>
 <body>
-<h1><?php echo '<?php ';?>print $_SESSION['name']; <?php echo '?>';?>さんの編集ページ</h1>
+<h1><?php echo $_SESSION['name'];?>
+さんの編集ページ</h1>
 <div style="margin: 5px;">
 <form action="" method="post">
 <button type="submit" name="logout" value="logout">ログアウト</button>
