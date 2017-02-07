@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2017-02-04 08:11:37
+/* Smarty version 3.1.30, created on 2017-02-07 10:31:08
   from "C:\xampp2\htdocs\techaca\forum2\templates\index.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_58957ea9c7ca58_22531864',
+  'unifunc' => 'content_589993dcf3bdf6_14815796',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ce3f8e232260ad9a20ae2494a68fadb747958b95' => 
     array (
       0 => 'C:\\xampp2\\htdocs\\techaca\\forum2\\templates\\index.tpl',
-      1 => 1486192293,
+      1 => 1486459864,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_58957ea9c7ca58_22531864 (Smarty_Internal_Template $_smarty_tpl) {
+function content_589993dcf3bdf6_14815796 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,7 +41,7 @@ function content_58957ea9c7ca58_22531864 (Smarty_Internal_Template $_smarty_tpl)
     </div>
 </form>
 <hr>
-<?php
+<?php if (isset($_smarty_tpl->tpl_vars['items']->value)) {
 $_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['items']->value, 'itemdata');
 if ($_from !== null) {
 foreach ($_from as $_smarty_tpl->tpl_vars['itemdata']->value) {
@@ -59,6 +59,7 @@ foreach ($_from as $_smarty_tpl->tpl_vars['itemdata']->value) {
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl);
 ?>
 
+<?php }?>
 </body>
 </html><?php }
 }
