@@ -9,7 +9,7 @@ session_start();
 require_once 'db.php';
 
 if(empty($_POST['name']) || empty($_POST['user_id']) || empty($_POST['password'])) {//フォームが空の時
-    print "Please input your name,id or password";
+    print "名前とIDとパスワードを入力してください";
 }else{
 	if(is_numeric($_POST['user_id'])){
     	$name = $_POST['name'];
@@ -19,14 +19,14 @@ if(empty($_POST['name']) || empty($_POST['user_id']) || empty($_POST['password']
     	try {
     	    $db = getDb();//データベースへの接続を確立
       		//同じユーザーID&パスワードが無いと確認
-      	  	$c_id = $db -> prepare("SELECT * FROM member WHERE id = :user_id");
-       		$c_id->bindValue(':user_id', $user_id);//ユーザーID set
-			$c_id->execute();
-        	$c_pass = $db -> prepare("SELECT * FROM member WHERE password LIKE :password");
-        	$c_pass->bindValue(':password', $password);//パスワード set
-			$c_pass->execute();
-			if($c_id->fetch() != NULL || $c_pass->fetch() != NULL){
-				print "Please set another id or another password";	
+      	  	$check_id = $db -> prepare("SELECT * FROM member WHERE id = :user_id");
+       		$check_id->bindValue(':user_id', $user_id);//ユーザーID set
+			$check_id->execute();
+        	$check_pass = $db -> prepare("SELECT * FROM member WHERE password LIKE :password");
+        	$check_pass->bindValue(':password', $password);//パスワード set
+			$check_pass->execute();
+			if($check_id->fetch() != NULL || $check_pass->fetch() != NULL){
+				print "別のIDまたはパスワードを設定してください";	
 			}else{//同じユーザーID&パスワードが無い場合
         	//INSERT命令の準備
         	$stt = $db -> prepare('INSERT INTO member(id, name, password) VALUES(:id, :name, :password)');
@@ -41,7 +41,7 @@ if(empty($_POST['name']) || empty($_POST['user_id']) || empty($_POST['password']
         	die('エラーメッセージ' . $error->getMessage());//接続失敗時の出力文
     	}
     }else{
-    	print "Please set id except 0.";
+    	print "適切なIDを入力してください";
     }
 }
 

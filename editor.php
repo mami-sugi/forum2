@@ -10,8 +10,10 @@ if(isset($_POST['logout'])){//ログアウト
 	session_destroy();
 	header('Location:index.php');
 }
+
 /*データベース接続*/
 require_once 'db.php';
+
 if(!empty($_POST['user_id']) && !empty($_POST['password'])){//indexから来た
     $user_id = $_POST['user_id'];
     $password = $_POST['password'];
@@ -20,10 +22,10 @@ if(!empty($_POST['user_id']) && !empty($_POST['password'])){//indexから来た
         $db = getDb();//データベースへの接続を確立
         
         //同じユーザーID&パスワードを確認
-        $c_id = $db -> prepare("SELECT * FROM member WHERE id = :user_id");
-        $c_id->bindValue(':user_id', $user_id);//ユーザーID set
-		$c_id->execute();
-		$user = $c_id->fetch(PDO::FETCH_ASSOC);
+        $check_id = $db -> prepare("SELECT * FROM member WHERE id = :user_id");
+        $check_id->bindValue(':user_id', $user_id);//ユーザーID set
+		$check_id->execute();
+		$user = $check_id->fetch(PDO::FETCH_ASSOC);
 		if($user['password'] != $password){
 			header('Location:index.php');	
         }else{
@@ -62,7 +64,7 @@ if(isset($_POST['id'])){//変更・削除が送られてきたとき
 	$id = $_POST['id'];
 if($_POST['action'] == "update"){
 if(!isset($_POST['new_contents'])) {//フォームに何もないとき
-    print "Please input your name or contents";
+    print "投稿内容を入力してください";
 }else{
     //XSS　エスケープ処理
     $new_contents = escape($_POST['new_contents']);
