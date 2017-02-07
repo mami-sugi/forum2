@@ -16,6 +16,7 @@
     <input type="submit" value="送信">
 </form>
 <hr>
+{if isset($items)}
 {foreach $items as $itemdata}
 {if $itemdata.user_id eq $smarty.session.user_id}
             <div style="margin-left: 30px;margin-bottom: 10px;padding: 5px;" >
@@ -35,5 +36,6 @@
             </div>
 {/if}
 {/foreach}
+{/if}
 </body>
 </html>

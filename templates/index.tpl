@@ -17,6 +17,7 @@
     </div>
 </form>
 <hr>
+{if isset($items)}
 {foreach $items as $itemdata}
             <div style="margin-left: 30px;margin-bottom: 10px;padding: 5px;" >
             投稿者名:<b>{$itemdata.name|escape:'htmlall'}</b><br><!--名前を表示-->
@@ -24,5 +25,6 @@
             <br>
             </div>     
 {/foreach}
+{/if}
 </body>
 </html>
