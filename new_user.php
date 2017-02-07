@@ -8,7 +8,7 @@ session_start();
 /*データベース接続*/
 require_once 'db.php';
 
-if(empty($_POST['name']) || empty($_POST['user_id']) || empty($_POST['password'])) {//フォームが空の時
+if(!isset($_POST['name']) || !isset($_POST['user_id']) || !isset($_POST['password'])) {//フォームが空の時
     print "名前とIDとパスワードを入力してください";
 }else{
 	if(is_numeric($_POST['user_id']) && mb_strlen($_POST['user_id']<=11)  && mb_strlen($_POST['name']<=255) && mb_strlen($_POST['password']<=255)){
