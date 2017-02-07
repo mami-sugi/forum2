@@ -24,14 +24,14 @@ if(!empty($_POST['user_id']) && !empty($_POST['password'])){//indexから来た
         //同じユーザーID&パスワードを確認
         $check_id = $db -> prepare("SELECT * FROM member WHERE id = :user_id");
         $check_id->bindValue(':user_id', $user_id);//ユーザーID set
-	$check_id->execute();
-	$user = $check_id->fetch(PDO::FETCH_ASSOC);
-	if($user['password'] != $password){
-		header('Location:index.php');	
+		$check_id->execute();
+		$user = $check_id->fetch(PDO::FETCH_ASSOC);
+		if($user['password'] != $password){
+			header('Location:index.php');	
         }else{
-		$_SESSION['user_id'] = $user_id;
-		$_SESSION['password'] = $password;
-		$_SESSION['name'] = $user['name'];
+			$_SESSION['user_id'] = $user_id;
+			$_SESSION['password'] = $password;
+			$_SESSION['name'] = $user['name'];
         	$_SESSION['login'] = 'login';
         }
         $db = NULL;//データベース接続を切る
@@ -43,7 +43,7 @@ if(!empty($_POST['user_id']) && !empty($_POST['password'])){//indexから来た
 }
 
 if(!isset($_POST['contents'])) {//フォームに何もないとき
-    print "Please input contents";
+    print "投稿内容を入力してください";
 }else{
     $contents = $_POST['contents'];
     /* 投稿内容をデータベースに保存 */
@@ -66,13 +66,12 @@ if($_POST['action'] == "update"){
 if(!isset($_POST['new_contents'])) {//フォームに何もないとき
     print "投稿内容を入力してください";
 }else{
-    //XSS　エスケープ処理
-    $new_contents = escape($_POST['new_contents']);
+    $new_contents = $_POST['new_contents'];
     try{
         $db = getDb();//データベースへの接続を確立
         $new_contents = $_POST['new_contents'];
-        $update = $db -> prepare("UPDATE post SET :contents WHERE id = :id");//UPDATE命令の準備
-        $update->bindValue(':contents',$contents);//投稿内容 set
+        $update = $db -> prepare("UPDATE post SET contents = :contents WHERE id = :id");//UPDATE命令の準備
+        $update->bindValue(':contents',$new_contents);//投稿内容 set
         $update->bindValue(':id', $id);//ユーザーID set
         $update->execute();//SELECT命令の実行
         $db = NULL;
@@ -83,7 +82,7 @@ if(!isset($_POST['new_contents'])) {//フォームに何もないとき
     }else if($_POST['action'] == "delete"){
 	    try{
 	        $db = getDb();//データベースへの接続を確立
-    	    	$delete = $db -> prepare("DELETE FROM post WHERE id = :id");//DELETE命令の準備
+    	    $delete = $db -> prepare("DELETE FROM post WHERE id = :id");//DELETE命令の準備
         	$delete->bindValue(':id', $id);//ID set
         	$delete->execute();//DELETE命令の実行
         	$db = NULL;
@@ -105,11 +104,11 @@ if(!isset($_POST['new_contents'])) {//フォームに何もないとき
         $temp_id = $row['user_id'];
         $member = $db -> prepare("SELECT * FROM member WHERE id = :temp_id");//SELECT命令の準備
         $member->bindValue(':temp_id', $temp_id);//ユーザーID set
-	$member->execute();//SELECT命令の実行
-	$temp = $member->fetch(PDO::FETCH_ASSOC);
-	$item[$i]['name'] = $temp['name'];
-	$smarty->assign('items',$item);
-	$i++;//item配列の添え字インクリメント
+		$member->execute();//SELECT命令の実行
+		$temp = $member->fetch(PDO::FETCH_ASSOC);
+		$item[$i]['name'] = $temp['name'];
+		$smarty->assign('items',$item);
+		$i++;//item配列の添え字インクリメント
         }
         $db = NULL;
     } catch (PDOException $error) {

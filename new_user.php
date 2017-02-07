@@ -11,7 +11,7 @@ require_once 'db.php';
 if(!isset($_POST['name']) || !isset($_POST['user_id']) || !isset($_POST['password'])) {//フォームが空の時
     print "名前とIDとパスワードを入力してください";
 }else{
-	if(is_numeric($_POST['user_id']) && mb_strlen($_POST['user_id']<=11)  && mb_strlen($_POST['name']<=255) && mb_strlen($_POST['password']<=255)){
+	if(is_numeric($_POST['user_id']) && mb_strlen($_POST['user_id'])<=11  && mb_strlen($_POST['name'])<=255 && mb_strlen($_POST['password'])<=255){
     	$name = $_POST['name'];
     	$user_id = $_POST['user_id'];
     	$password = $_POST['password'];
@@ -42,11 +42,11 @@ if(!isset($_POST['name']) || !isset($_POST['user_id']) || !isset($_POST['passwor
     	}
     }else if(!is_numeric($_POST['user_id'])){
     	print "適切なIDを入力してください";
-    }else if(mb_strlen($_POST['user_id']>11)){
+    }else if(mb_strlen($_POST['user_id'])>11){
     	print "IDが11文字以上です";
-    }else if(mb_strlen($_POST['name']>255)){
+    }else if(mb_strlen($_POST['name'])>255){
     	print "名前が255文字を超えています";
-	}else if(mb_strlen($_POST['password']>255)){
+	}else if(mb_strlen($_POST['password'])>255){
 		print "パスワードが255文字を超えています";
 	}
 }
