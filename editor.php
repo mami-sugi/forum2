@@ -14,30 +14,29 @@ if(isset($_POST['logout'])){//ログアウト
 /*データベース接続*/
 require_once 'db.php';
 
-if(!empty($_POST['user_id']) && !empty($_POST['password'])){//indexから来た
+if(isset($_POST['user_id']) && isset($_POST['password'])){//indexから来た
     $user_id = $_POST['user_id'];
     $password = $_POST['password'];
     /* 投稿内容をデータベースに保存 */
     try {
         $db = getDb();//データベースへの接続を確立
-        
         //同じユーザーID&パスワードを確認
-        $check_id = $db -> prepare("SELECT * FROM member WHERE id = :user_id");
-        $check_id->bindValue(':user_id', $user_id);//ユーザーID set
-		$check_id->execute();
-		$user = $check_id->fetch(PDO::FETCH_ASSOC);
-		if($user['password'] != $password){
-			header('Location:index.php');	
+      	$check = $db -> prepare("SELECT * FROM member WHERE id = :user_id AND password LIKE :password");
+       	$check->bindValue(':user_id', $user_id);//ユーザーID set
+        $check->bindValue(':password', $password);//パスワード set
+		$check->execute();
+		if(!$user = $check->fetch(PDO::FETCH_ASSOC)){
+			header('Location:index.php');
         }else{
 			$_SESSION['user_id'] = $user_id;
 			$_SESSION['name'] = $user['name'];
-        	$_SESSION['login'] = 'login';
+        	$_SESSION['login'] = 'login';	
         }
         $db = NULL;//データベース接続を切る
     } catch (PDOException $error) {
         die('エラーメッセージ' . $error->getMessage());//接続失敗時の出力文
     }
-}elseif($_SESSION['login'] != 'login'){//loginがなかった時(url入力で無理やり来た)　強制送還
+}else if($_SESSION['login'] != 'login'){//loginがなかった時(url入力で無理やり来た)　強制送還
 		header('Location:index.php');	
 }
 
