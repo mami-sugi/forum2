@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>簡易掲示板2</title>
+	<title>簡易掲示板2</title>
 	<meta content="text/html;charset=utf-8" http-equiv="content-type">
 </head>
 <body>
