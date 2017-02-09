@@ -9,10 +9,6 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['password'])){//indexに来た
 	$_SESSION = array();// セッション変数を全て解除する
 	session_destroy();
 }
-/*エスケープ処理　クロスサイトスクリプティング用　for XSS*/
-function escape($str){
-    return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
-}
 
 /*データベース接続*/
 require_once 'db.php';
@@ -30,11 +26,11 @@ require_once 'db.php';
         $user_id = $row['user_id'];
         $member = $db -> prepare("SELECT * FROM member WHERE id = :user_id");//SELECT命令の準備
         $member->bindValue(':user_id', $user_id);//ユーザーID set
-		$member->execute();//SELECT命令の実行
-		$user = $member->fetch(PDO::FETCH_ASSOC);
-		$item[$i]['name'] = $user['name'];
-		$smarty->assign('items',$item);
-		$i++;//item配列の添え字インクリメント
+	$member->execute();//SELECT命令の実行
+	$user = $member->fetch(PDO::FETCH_ASSOC);
+	$item[$i]['name'] = $user['name'];
+	$smarty->assign('items',$item);
+	$i++;//item配列の添え字インクリメント
         }
         $db = NULL;
     } catch (PDOException $error) {
