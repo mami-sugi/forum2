@@ -19,18 +19,18 @@ if(isset($_POST['user_id']) && isset($_POST['password'])){//indexから来た
     $password = $_POST['password'];
     /* 投稿内容をデータベースに保存 */
     try {
-        $db = getDb();//データベースへの接続を確立
-        //同じユーザーID&パスワードを確認
-      	$check = $db -> prepare("SELECT * FROM member WHERE id = :user_id AND password LIKE :password");
-       	$check->bindValue(':user_id', $user_id);//ユーザーID set
-        $check->bindValue(':password', $password);//パスワード set
-		$check->execute();
-		if(!$user = $check->fetch(PDO::FETCH_ASSOC)){
-			header('Location:index.php');
+	$db = getDb();//データベースへの接続を確立
+	//同じユーザーID&パスワードを確認
+	$check = $db -> prepare("SELECT * FROM member WHERE id = :user_id AND password LIKE :password");
+	$check->bindValue(':user_id', $user_id);//ユーザーID set
+	$check->bindValue(':password', $password);//パスワード set
+	$check->execute();
+	if(!$user = $check->fetch(PDO::FETCH_ASSOC)){
+		header('Location:index.php');
         }else{
-			$_SESSION['user_id'] = $user_id;
-			$_SESSION['name'] = $user['name'];
-        	$_SESSION['login'] = 'login';	
+		$_SESSION['user_id'] = $user_id;
+		$_SESSION['name'] = $user['name'];
+		$_SESSION['login'] = 'login';	
         }
         $db = NULL;//データベース接続を切る
     } catch (PDOException $error) {
@@ -92,25 +92,25 @@ if(!isset($_POST['new_contents'])) {//フォームに何もないとき
         
     /*「ユーザー名」「本文」データ表示(投稿内容表示)*/
     try{
-        $db = getDb();//データベースへの接続を確立
-        $post = $db -> prepare('SELECT * FROM post ORDER BY id DESC');//SELECT命令の準備
-        $post->execute();//SELECT命令の実行$items = array();//表示コンテンツを格納する配列
-        $i=0;//item配列の添え字初期化
-        while($row = $post->fetch(PDO::FETCH_ASSOC)){//現在格納されているものすべてを
-        $item[$i] = $row;//postテーブル内容格納
-        //ユーザーIDからユーザー名をとる
-        $temp_id = $row['user_id'];
-        $member = $db -> prepare("SELECT * FROM member WHERE id = :temp_id");//SELECT命令の準備
-        $member->bindValue(':temp_id', $temp_id);//ユーザーID set
-		$member->execute();//SELECT命令の実行
-		$temp = $member->fetch(PDO::FETCH_ASSOC);
-		$item[$i]['name'] = $temp['name'];
-		$smarty->assign('items',$item);
-		$i++;//item配列の添え字インクリメント
+	$db = getDb();//データベースへの接続を確立
+	$post = $db -> prepare('SELECT * FROM post ORDER BY id DESC');//SELECT命令の準備
+	$post->execute();//SELECT命令の実行$items = array();//表示コンテンツを格納する配列
+	$i=0;//item配列の添え字初期化
+	while($row = $post->fetch(PDO::FETCH_ASSOC)){//現在格納されているものすべてを
+	$item[$i] = $row;//postテーブル内容格納
+	//ユーザーIDからユーザー名をとる
+	$temp_id = $row['user_id'];
+	$member = $db -> prepare("SELECT * FROM member WHERE id = :temp_id");//SELECT命令の準備
+	$member->bindValue(':temp_id', $temp_id);//ユーザーID set
+	$member->execute();//SELECT命令の実行
+	$temp = $member->fetch(PDO::FETCH_ASSOC);
+	$item[$i]['name'] = $temp['name'];
+	$smarty->assign('items',$item);
+	$i++;//item配列の添え字インクリメント
         }
         $db = NULL;
     } catch (PDOException $error) {
-        die('エラーメッセージ' . $error->getMessage());//接続失敗時の出力文
+	die('エラーメッセージ' . $error->getMessage());//接続失敗時の出力文
     }
 
 $smarty->display('editor.tpl');
