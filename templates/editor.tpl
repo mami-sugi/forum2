@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>簡易掲示板</title>
+<meta content="text/html;charset=utf-8" http-equiv="content-type">
 </head>
 <body>
 <h1>{$smarty.session.name}さんの編集ページ</h1>
