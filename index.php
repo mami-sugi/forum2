@@ -2,14 +2,13 @@
 /** 
  * 掲示板　ログイン・ログ表示
  */
-require_once 'mb_and_for-smarty.php';
+require_once 'config.php';
 session_start();
 
-if(isset($_SESSION['user_id']) && isset($_SESSION['password'])){//indexに来たら自動ログアウト
+if(isset($_SESSION)){//indexに来たら自動ログアウト
 	$_SESSION = array();// セッション変数を全て解除する
 	session_destroy();
 }
-
 /*データベース接続*/
 require_once 'db.php';
 
